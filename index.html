@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Brief Generator</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #f5f5f7;
+            color: #1d1d1f;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1d1d1f;
+        }
+
+        .subtitle {
+            color: #86868b;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        .section {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #1d1d1f;
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #1d1d1f;
+        }
+
+        .hint {
+            font-size: 0.85rem;
+            color: #86868b;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="url"],
+        textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d2d2d7;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input[type="text"]:focus,
+        input[type="url"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #0071e3;
+            box-shadow: 0 0 0 3px rgba(0,113,227,0.15);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .format-card {
+            background: #f5f5f7;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+
+        .format-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .format-number {
+            font-weight: 600;
+            color: #0071e3;
+        }
+
+        .remove-format {
+            background: none;
+            border: none;
+            color: #ff3b30;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 4px 8px;
+        }
+
+        .remove-format:hover {
+            text-decoration: underline;
+        }
+
+        .add-format-btn {
+            width: 100%;
+            padding: 16px;
+            background: #f5f5f7;
+            border: 2px dashed #d2d2d7;
+            border-radius: 12px;
+            font-size: 1rem;
+            color: #86868b;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .add-format-btn:hover {
+            border-color: #0071e3;
+            color: #0071e3;
+        }
+
+        .generate-btn {
+            width: 100%;
+            padding: 18px 32px;
+            background: #0071e3;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .generate-btn:hover {
+            background: #0077ed;
+        }
+
+        .output-section {
+            display: none;
+        }
+
+        .output-section.visible {
+            display: block;
+        }
+
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .copy-btn {
+            padding: 12px 24px;
+            background: #34c759;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: #30b350;
+        }
+
+        .copy-btn.copied {
+            background: #86868b;
+        }
+
+        .output-content {
+            background: white;
+            color: #1d1d1f;
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid #d2d2d7;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            font-size: 0.95rem;
+            word-wrap: break-word;
+            max-height: 600px;
+            overflow-y: auto;
+            line-height: 1.7;
+        }
+
+        .output-content h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: #1d1d1f;
+            border-bottom: 2px solid #0071e3;
+            padding-bottom: 12px;
+        }
+
+        .output-content h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-top: 32px;
+            margin-bottom: 16px;
+            color: #1d1d1f;
+        }
+
+        .output-content h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 20px;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .output-content p {
+            margin-bottom: 12px;
+        }
+
+        .output-content ul {
+            margin-left: 24px;
+            margin-bottom: 12px;
+        }
+
+        .output-content li {
+            margin-bottom: 6px;
+        }
+
+        .output-content .section-block {
+            background: #f9f9fb;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #0071e3;
+        }
+
+        .output-content .format-block {
+            background: #f0f7ff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .output-content .highlight {
+            background: #fff3cd;
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin: 12px 0;
+        }
+
+        .output-content a {
+            color: #0071e3;
+            word-break: break-all;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Creative Brief Generator</h1>
+        <p class="subtitle">Fill in the details below to generate a formatted creative brief</p>
+
+        <form id="briefForm">
+            <!-- INTRO SECTION -->
+            <div class="section">
+                <h2 class="section-title">Intro</h2>
+
+                <div class="row">
+                    <div class="field">
+                        <label for="brandName">Brand Name</label>
+                        <input type="text" id="brandName" placeholder="e.g., Fellow" value="Fellow" required>
+                    </div>
+                    <div class="field">
+                        <label for="compensation">Compensation</label>
+                        <input type="text" id="compensation" placeholder="e.g., $500 per video" value="$200 per video + $50 bonus for every 10k views">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="productHighlights">What does the brand want to highlight about the product?</label>
+                    <textarea id="productHighlights">Fellow is an AI meeting notetaker that automatically joins your calls, transcribes everything, and generates action items. Key features to highlight:
+- Ask Fellow: Chat with your meeting history to find any detail instantly
+- Redact Feature: Remove sensitive parts from transcripts before sharing
+- Follow-up Emails: Auto-generate personalized follow-up emails from your calls
+- Multi-platform: Works with Zoom, Google Meet, and Microsoft Teams</textarea>
+                </div>
+
+                <div class="field">
+                    <label for="productAngles">What angles of the product does the brand want to show?</label>
+                    <textarea id="productAngles">- Time-saving: Show the before/after of manually taking notes vs. using Fellow
+- Professional credibility: Position yourself as someone who has their life together
+- Relatable corporate humor: Play into the "corporate life" aesthetic
+- Problem-solving: Focus on pain points like forgetting what was said in meetings</textarea>
+                </div>
+
+                <div class="field">
+                    <label for="productLink">Product Access Link</label>
+                    <p class="hint">Link where creators can access the product</p>
+                    <input type="url" id="productLink" value="https://box.com/fellow-creator-access">
+                </div>
+
+                <div class="field">
+                    <label for="dos">Do's</label>
+                    <p class="hint">One per line</p>
+                    <textarea id="dos">Be authentic and natural on camera
+Show the actual product interface in use
+Use trending sounds when possible
+Include a clear call-to-action (link in bio)
+Film in good lighting with clear audio
+Show your genuine reaction to the features</textarea>
+                </div>
+
+                <div class="field">
+                    <label for="donts">Don'ts</label>
+                    <p class="hint">One per line</p>
+                    <textarea id="donts">Don't mention competitors (Otter.ai, Fireflies, etc.)
+Don't use copyrighted music
+Don't make claims we can't verify ("saves 10 hours a week")
+Don't film in messy or unprofessional settings
+Don't use the redact feature to imply deception or lying to employers
+Don't post without warming up your account first</textarea>
+                </div>
+            </div>
+
+            <!-- WARM-UP SECTION -->
+            <div class="section">
+                <h2 class="section-title">Account Warm-Up Settings</h2>
+
+                <div class="field">
+                    <label for="searchTerms">Search Terms for Warm-Up</label>
+                    <p class="hint">What should creators search to warm up their account? (One per line)</p>
+                    <textarea id="searchTerms">AI notetaker
+AI meeting assistant
+Corporate productivity tips
+Work from home setup
+AI tools for work
+Meeting productivity hacks
+Corporate tech reviews</textarea>
+                </div>
+
+                <div class="field">
+                    <label for="accountNameExamples">Account Name Examples</label>
+                    <p class="hint">Example usernames for creators (One per line)</p>
+                    <textarea id="accountNameExamples">@talkingwithbella
+@benjamintalks
+@fellowjasmine
+@ryansfellow
+@techwithtaylor
+@corporatecaitlin</textarea>
+                </div>
+
+                <div class="field">
+                    <label for="bioExamples">Bio Examples</label>
+                    <p class="hint">Example bios for creators (One per line)</p>
+                    <textarea id="bioExamples">POV: you gave your job to AI but kept the salary
+Idk if I should thank or be scared of AI
+Making corporate life bearable, one hack at a time
+Your favorite coworker who actually knows tech
+Survived 47 meetings this week (with help)</textarea>
+                </div>
+            </div>
+
+            <!-- VIDEO FORMATS SECTION -->
+            <div class="section">
+                <h2 class="section-title">Video Formats</h2>
+                <p class="hint" style="margin-bottom: 20px;">Add up to 10 video formats with instructions</p>
+
+                <div id="formatsContainer">
+                    <!-- Format cards will be added here -->
+                </div>
+
+                <button type="button" class="add-format-btn" id="addFormatBtn">+ Add Video Format</button>
+            </div>
+
+            <button type="submit" class="generate-btn">Generate Creative Brief</button>
+        </form>
+
+        <!-- OUTPUT SECTION -->
+        <div class="section output-section" id="outputSection">
+            <div class="output-header">
+                <h2 class="section-title">Your Creative Brief</h2>
+                <button class="copy-btn" id="copyBtn">Copy to Clipboard</button>
+            </div>
+            <div class="output-content" id="outputContent"></div>
+        </div>
+    </div>
+
+    <script>
+        let formatCount = 0;
+        const maxFormats = 10;
+
+        // Example format data
+        const exampleFormats = [
+            {
+                name: "Product Showcase",
+                links: "https://drive.google.com/file/d/1CgVW7bsLViyB1g4n5GBH5YqPUWYvq6Oz/view",
+                instructions: `Showcase Fellow's features in an engaging walkthrough:
+
+1. Start with a hook that grabs attention
+2. Screen record yourself using Fellow's key features:
+   - Ask Fellow (chat with your meeting history)
+   - Redact Feature (remove sensitive info)
+   - Writing a follow-up email
+3. Show genuine reactions to the features
+4. End with a CTA directing to link in bio
+
+Tip: Film on your phone while screen recording your laptop, or use a split-screen edit.`,
+                text: `3 YEARS of corporate and I'm just now finding out about this?
+This AI just changed how I do meetings forever
+Why did no one tell me about this sooner??
+Feel free to come up with your own hooks based on what's trending!`
+            },
+            {
+                name: "Saying the Wrong Thing in a Meeting",
+                links: "https://drive.google.com/file/d/example123/view",
+                instructions: `This format showcases Fellow's "redact" feature in a funny, relatable way.
+
+How to record:
+1. Join a meeting with Fellow AI enabled
+2. Talk as if you're in a corporate meeting
+3. Say something out of pocket or embarrassing (that you'd want to hide from coworkers)
+4. Show yourself discovering it in the transcript
+5. Demonstrate using the redact feature to remove it
+
+Tip: Film on Snapchat to go back and forth between laptop screen and your face. To get a realistic meeting recap, you can make Fellow listen to an audio recording of an actual meeting on YouTube at x2 speed.
+
+Important: Do NOT use the redact feature to imply lying or deception. Frame it as covering an honest mistake.`,
+                text: `POV: you open the AI meeting recap and realize it heard EVERYTHING
+I said something I shouldn't have...
+When the AI transcript catches your unfiltered thoughts
+Note to self: the AI is always listening`
+            },
+            {
+                name: "Tech Tutorial",
+                links: `https://www.instagram.com/reel/DTlHpwGDE0L/
+https://www.facebook.com/ads/library/?id=866795572484362`,
+                instructions: `Create an educational walkthrough showing a specific Fellow use case.
+
+Format options:
+- B-roll with voiceover
+- Talking head walking through a tutorial
+- Screen recording with face cam in corner
+
+Pick ONE use case per video (try a different one each time):
+- Turn sales calls into tailored follow-up emails
+- Turn 1:1 calls into performance review drafts
+- Create 30 pieces of content from one webinar recording
+- Never forget action items from any meeting
+
+Check the "Fellow Use Cases" tab for more inspiration.`,
+                text: `How I turn my sales calls into tailored follow-up emails using Fellow
+Did you know you could turn your 1:1 calls into a performance review draft instantly?
+How I made 30 pieces of content with one webinar recording in under 5 minutes
+The AI tool that's replacing my entire note-taking system`
+            },
+            {
+                name: "Reaction Video",
+                links: `https://drive.google.com/file/d/13sDcqFPub9U8s1qRXwYGtKaQp3LDHvUH/view
+https://www.instagram.com/p/DQtgkPEjEHj/`,
+                instructions: `React to Fellow's features as if you're discovering them for the first time.
+
+Please include this format in the mix at least once a week.
+
+Structure:
+1. Show a clip or recreate a trending "reaction" format
+2. Transition into showing Fellow
+3. Walk through the feature that impressed you
+4. End with genuine reaction + CTA
+
+Get creative! These are suggested headlines but you have full creative freedom:
+- "This is the tool I used to create instant follow-up emails"
+- "This is how I created 30 ads from one webinar recording"`,
+                text: `Okay but why is no one talking about this??
+I need everyone to stop what they're doing and look at this
+This just changed my entire workflow
+Corporate girlies, gather around`
+            }
+        ];
+
+        // Add initial formats with example data
+        document.addEventListener('DOMContentLoaded', () => {
+            exampleFormats.forEach((format, index) => {
+                addFormat(format);
+            });
+        });
+
+        function addFormat(data = null) {
+            if (formatCount >= maxFormats) {
+                alert('Maximum 10 formats allowed');
+                return;
+            }
+
+            formatCount++;
+            const container = document.getElementById('formatsContainer');
+
+            const formatCard = document.createElement('div');
+            formatCard.className = 'format-card';
+            formatCard.id = `format-${formatCount}`;
+            formatCard.innerHTML = `
+                <div class="format-header">
+                    <span class="format-number">Format #${formatCount}</span>
+                    ${formatCount > 1 ? '<button type="button" class="remove-format" onclick="removeFormat(this)">Remove</button>' : ''}
+                </div>
+                <div class="field">
+                    <label>Format Name</label>
+                    <input type="text" class="format-name" placeholder="e.g., Product Showcase" value="${data ? data.name : ''}">
+                </div>
+                <div class="field">
+                    <label>Example Video Links</label>
+                    <p class="hint">One link per line</p>
+                    <textarea class="format-links" placeholder="https://drive.google.com/...&#10;https://instagram.com/reel/...">${data ? data.links : ''}</textarea>
+                </div>
+                <div class="field">
+                    <label>Instructions / How to Record</label>
+                    <textarea class="format-instructions" placeholder="Step-by-step instructions for creating this format...">${data ? data.instructions : ''}</textarea>
+                </div>
+                <div class="field">
+                    <label>Text-on-Screen Suggestions</label>
+                    <p class="hint">One per line</p>
+                    <textarea class="format-text" placeholder="3 YEARS of corporate and I'm just now finding out about this?&#10;POV: you open the AI meeting recap...">${data ? data.text : ''}</textarea>
+                </div>
+            `;
+
+            container.appendChild(formatCard);
+        }
+
+        function removeFormat(btn) {
+            const card = btn.closest('.format-card');
+            card.remove();
+            renumberFormats();
+        }
+
+        function renumberFormats() {
+            const cards = document.querySelectorAll('.format-card');
+            formatCount = cards.length;
+            cards.forEach((card, index) => {
+                const num = index + 1;
+                card.querySelector('.format-number').textContent = `Format #${num}`;
+            });
+        }
+
+        document.getElementById('addFormatBtn').addEventListener('click', addFormat);
+
+        document.getElementById('briefForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            generateBrief();
+        });
+
+        function generateBrief() {
+            const brandName = document.getElementById('brandName').value.trim();
+            const compensation = document.getElementById('compensation').value.trim();
+            const productHighlights = document.getElementById('productHighlights').value.trim();
+            const productAngles = document.getElementById('productAngles').value.trim();
+            const productLink = document.getElementById('productLink').value.trim();
+            const dos = document.getElementById('dos').value.trim();
+            const donts = document.getElementById('donts').value.trim();
+            const searchTerms = document.getElementById('searchTerms').value.trim();
+            const accountNameExamples = document.getElementById('accountNameExamples').value.trim();
+            const bioExamples = document.getElementById('bioExamples').value.trim();
+
+            // Format lists
+            const dosList = dos.split('\n').filter(d => d.trim()).map(d => `    • ${d.trim()}`).join('\n');
+            const dontsList = donts.split('\n').filter(d => d.trim()).map(d => `    • ${d.trim()}`).join('\n');
+            const searchTermsList = searchTerms.split('\n').filter(t => t.trim()).map(t => `        ◦ ${t.trim()}`).join('\n');
+            const accountNamesList = accountNameExamples.split('\n').filter(n => n.trim()).join(', ');
+            const biosList = bioExamples.split('\n').filter(b => b.trim()).map(b => `        ◦ ${b.trim()}`).join('\n');
+
+            // Collect formats
+            const formatCards = document.querySelectorAll('.format-card');
+            let formatsOutput = '';
+
+            formatCards.forEach((card, index) => {
+                const name = card.querySelector('.format-name').value.trim();
+                const links = card.querySelector('.format-links').value.trim();
+                const instructions = card.querySelector('.format-instructions').value.trim();
+                const textOnScreen = card.querySelector('.format-text').value.trim();
+
+                if (name || links || instructions || textOnScreen) {
+                    const linksList = links.split('\n').filter(l => l.trim()).map(l => `<a href="${l.trim()}" style="color: #2563eb;">${l.trim()}</a>`).join('<br>');
+                    const textList = textOnScreen.split('\n').filter(t => t.trim()).map(t => `<li>${t.trim()}</li>`).join('');
+
+                    formatsOutput += `
+                        <table width="100%" cellpadding="16" cellspacing="0" style="border-collapse: collapse; margin-bottom: 12px;">
+                            <tr>
+                                <td style="background-color: #e0f2fe; border-radius: 8px;">
+                                    <p style="font-size: 16px; font-weight: bold; color: #1e40af; margin-bottom: 12px;">Format #${index + 1}: ${name}</p>
+                                    ${links ? `<p style="margin-bottom: 12px;"><strong>Example Videos:</strong><br>${linksList}</p>` : ''}
+                                    ${instructions ? `<p style="margin-bottom: 12px;"><strong>How to Record:</strong><br>${instructions.replace(/\n/g, '<br>')}</p>` : ''}
+                                    ${textOnScreen ? `<p style="font-weight: bold; margin-bottom: 4px;">Text-on-Screen Suggestions:</p><ul style="margin-left: 20px;">${textList}</ul>` : ''}
+                                </td>
+                            </tr>
+                        </table>
+                    `;
+                }
+            });
+
+            // Helper function to wrap content in a styled table (preserves background in Google Docs)
+            function sectionBox(content, bgColor = '#f3f4f6') {
+                return `
+                    <table width="100%" cellpadding="16" cellspacing="0" style="border-collapse: collapse; margin-bottom: 16px;">
+                        <tr>
+                            <td style="background-color: ${bgColor}; border-left: 4px solid #2563eb; border-radius: 8px;">
+                                ${content}
+                            </td>
+                        </tr>
+                    </table>
+                `;
+            }
+
+            function formatBox(content) {
+                return `
+                    <table width="100%" cellpadding="16" cellspacing="0" style="border-collapse: collapse; margin-bottom: 12px;">
+                        <tr>
+                            <td style="background-color: #e0f2fe; border-radius: 8px;">
+                                ${content}
+                            </td>
+                        </tr>
+                    </table>
+                `;
+            }
+
+            function highlightBox(content) {
+                return `
+                    <table width="100%" cellpadding="12" cellspacing="0" style="border-collapse: collapse; margin: 12px 0;">
+                        <tr>
+                            <td style="background-color: #fef3c7; border-radius: 6px;">
+                                ${content}
+                            </td>
+                        </tr>
+                    </table>
+                `;
+            }
+
+            // Build the full brief as HTML with tables for Google Docs compatibility
+            const brief = `
+                <h1 style="font-size: 24px; font-weight: bold; color: #1e3a8a; border-bottom: 3px solid #2563eb; padding-bottom: 8px; margin-bottom: 24px;">CREATIVE BRIEF: ${brandName}</h1>
+
+                <h2 style="font-size: 18px; font-weight: bold; color: #1f2937; margin-top: 24px; margin-bottom: 12px;">1. Intro</h2>
+                ${sectionBox(`
+                    <p style="margin-bottom: 12px;"><strong>Compensation:</strong> ${compensation}</p>
+
+                    <p style="font-weight: bold; margin-top: 16px; margin-bottom: 4px;">What does the brand want to highlight?</p>
+                    <p style="margin-bottom: 12px;">${productHighlights.replace(/\n/g, '<br>')}</p>
+
+                    <p style="font-weight: bold; margin-top: 16px; margin-bottom: 4px;">Product angles to show:</p>
+                    <p style="margin-bottom: 12px;">${productAngles.replace(/\n/g, '<br>')}</p>
+
+                    <p style="font-weight: bold; margin-top: 16px; margin-bottom: 4px;">Product Access Link:</p>
+                    <p style="margin-bottom: 12px;"><a href="${productLink}" style="color: #2563eb;">${productLink}</a></p>
+
+                    <p style="font-weight: bold; margin-top: 16px; margin-bottom: 4px;">Do's</p>
+                    <ul style="margin-left: 20px; margin-bottom: 12px;">${dos.split('\n').filter(d => d.trim()).map(d => `<li>${d.trim()}</li>`).join('')}</ul>
+
+                    <p style="font-weight: bold; margin-top: 16px; margin-bottom: 4px;">Don'ts</p>
+                    <ul style="margin-left: 20px;">${donts.split('\n').filter(d => d.trim()).map(d => `<li>${d.trim()}</li>`).join('')}</ul>
+                `)}
+
+                <h2 style="font-size: 18px; font-weight: bold; color: #1f2937; margin-top: 24px; margin-bottom: 12px;">2. Create a New Instagram/TikTok Account</h2>
+                ${sectionBox(`
+                    <p style="margin-bottom: 12px;">Create a new Instagram/TikTok account for <strong>${brandName}</strong></p>
+
+                    <p style="font-weight: bold; margin-top: 16px; margin-bottom: 4px;">Account Name</p>
+                    <p style="margin-bottom: 12px;">Make the name something generic.<br>
+                    <strong>Examples:</strong> ${accountNamesList}</p>
+
+                    <p style="font-weight: bold; margin-top: 16px; margin-bottom: 4px;">Profile Picture</p>
+                    <p style="margin-bottom: 12px;">Add a profile picture</p>
+
+                    <p style="font-weight: bold; margin-top: 16px; margin-bottom: 4px;">Bio</p>
+                    <p style="margin-bottom: 8px;">Add a bio. Can be simple, funny, generic. Examples:</p>
+                    <ul style="margin-left: 20px;">${bioExamples.split('\n').filter(b => b.trim()).map(b => `<li>${b.trim()}</li>`).join('')}</ul>
+                `)}
+
+                <h2 style="font-size: 18px; font-weight: bold; color: #1f2937; margin-top: 24px; margin-bottom: 12px;">3. Account Warm-Up</h2>
+                ${sectionBox(`
+                    <p style="font-weight: bold; margin-bottom: 4px;">Why this step?</p>
+                    <p style="margin-bottom: 12px;">We need Instagram and TikTok to recognize you as a real person and not a bot. To do that, you need to use the account as if you're just a regular person. We also need to make sure that when you do post, you will hit your target audience.</p>
+
+                    <p style="font-weight: bold; margin-top: 16px; margin-bottom: 8px;">How to warm up your account:</p>
+                    <ol style="margin-left: 20px; margin-bottom: 12px;">
+                        <li style="margin-bottom: 8px;">After creating your account, go to the FYP / explore page search bar and search up content related to ${brandName}. Examples:
+                            <ul style="margin-left: 20px; margin-top: 4px;">${searchTerms.split('\n').filter(t => t.trim()).map(t => `<li>${t.trim()}</li>`).join('')}</ul>
+                        </li>
+                        <li style="margin-bottom: 8px;">Scroll on the search and only interact with videos related to the niche</li>
+                        <li style="margin-bottom: 8px;">Interact by:
+                            <ul style="margin-left: 20px; margin-top: 4px;">
+                                <li>Liking, commenting, and saving videos</li>
+                                <li>Following at least 15 creators in the same niche</li>
+                                <li>Watching the whole video (important!)</li>
+                                <li>Do NOT like/save/comment too quickly - this will be flagged as bot behavior</li>
+                            </ul>
+                        </li>
+                        <li style="margin-bottom: 8px;">Do this for around 20 minutes (the longer the better) then exit the app</li>
+                        <li style="margin-bottom: 8px;">After an hour or so, check your FYP / explore page:
+                            <ul style="margin-left: 20px; margin-top: 4px;">
+                                <li>If done correctly, it should be filled with content related to the niche</li>
+                                <li>If not, keep searching up related posts until your FYP is filled with relevant content</li>
+                            </ul>
+                        </li>
+                        <li style="margin-bottom: 8px;">For 3 days, repeat the steps above to fully warm up your account</li>
+                    </ol>
+
+                    <p style="margin-bottom: 12px;">If you followed these steps correctly, your account should be warmed up!</p>
+
+                    ${highlightBox(`<strong>⚠️ IMPORTANT:</strong> Do not post until you warm-up your account for at least 72 hours.`)}
+
+                    <p style="margin-top: 12px;"><strong>Next Step:</strong> Go to Phase 2 to find out how to check if your account is properly warmed up!</p>
+                `)}
+
+                <h2 style="font-size: 18px; font-weight: bold; color: #1f2937; margin-top: 24px; margin-bottom: 12px;">4. Before Posting: Create an Engagement Post</h2>
+                ${sectionBox(`
+                    <p style="font-weight: bold; margin-bottom: 4px;">What is an engagement post?</p>
+                    <p style="margin-bottom: 12px;">An engagement post is something that attracts a broad audience. It's a relatable post meant to go viral and garner lots of engagement. It doesn't need to have anything to do with ${brandName}. Its purpose is just to garner traction to your account before you start posting about ${brandName}.</p>
+
+                    <p style="font-weight: bold; margin-top: 16px; margin-bottom: 4px;">The goal of the engagement post:</p>
+                    <ul style="margin-left: 20px; margin-bottom: 12px;">
+                        <li>Get eyes on your account before posting about ${brandName}</li>
+                        <li>See if your account is properly warmed up</li>
+                        <li>A properly warmed up account = all your videos should get above 300 views</li>
+                    </ul>
+
+                    <p style="font-weight: bold; margin-top: 16px; margin-bottom: 4px;">Get more traction (optional):</p>
+                    <p style="margin-bottom: 8px;">This step is optional, but it will almost guarantee that your account will automatically get more views (also means more bonuses for you).</p>
+                    <ul style="margin-left: 20px;">
+                        <li>Share your engagement post on the Instagram story of your main account</li>
+                        <li>Get some friends to follow you / comment on your post</li>
+                    </ul>
+                `)}
+
+                <h2 style="font-size: 18px; font-weight: bold; color: #1f2937; margin-top: 24px; margin-bottom: 12px;">5. Start Posting</h2>
+                ${sectionBox(`
+                    <p style="margin-bottom: 12px;">If your engagement post got over 300 views, congrats! You can start safely posting without worrying about getting stuck in the &lt;100 view jail.</p>
+                    <p>We provide creative direction for you in the <strong>Formats & Scripts</strong> below.</p>
+                `)}
+
+                <h2 style="font-size: 18px; font-weight: bold; color: #1f2937; margin-top: 24px; margin-bottom: 12px;">6. Video Formats</h2>
+                ${formatsOutput}
+            `;
+
+            document.getElementById('outputContent').innerHTML = brief;
+            document.getElementById('outputSection').classList.add('visible');
+            document.getElementById('outputSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        document.getElementById('copyBtn').addEventListener('click', async () => {
+            const content = document.getElementById('outputContent');
+
+            // Copy as rich text (HTML) for Google Docs / Notion
+            try {
+                const htmlContent = content.innerHTML;
+                const blob = new Blob([htmlContent], { type: 'text/html' });
+                const clipboardItem = new ClipboardItem({
+                    'text/html': blob,
+                    'text/plain': new Blob([content.innerText], { type: 'text/plain' })
+                });
+                await navigator.clipboard.write([clipboardItem]);
+
+                const btn = document.getElementById('copyBtn');
+                btn.textContent = 'Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = 'Copy to Clipboard';
+                    btn.classList.remove('copied');
+                }, 2000);
+            } catch (err) {
+                // Fallback to plain text
+                navigator.clipboard.writeText(content.innerText);
+            }
+        });
+    </script>
+</body>
+</html>
