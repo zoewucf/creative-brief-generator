@@ -327,57 +327,40 @@
                 <div class="row">
                     <div class="field">
                         <label for="brandName">Brand Name</label>
-                        <input type="text" id="brandName" placeholder="e.g., Fellow" value="Fellow" required>
+                        <input type="text" id="brandName" placeholder="e.g., Fellow" required>
                     </div>
                     <div class="field">
                         <label for="compensation">Compensation</label>
-                        <input type="text" id="compensation" placeholder="e.g., $500 per video" value="$200 per video + $50 bonus for every 10k views">
+                        <input type="text" id="compensation" placeholder="e.g., $500 per video">
                     </div>
                 </div>
 
                 <div class="field">
                     <label for="productHighlights">What does the brand want to highlight about the product?</label>
-                    <textarea id="productHighlights">Fellow is an AI meeting notetaker that automatically joins your calls, transcribes everything, and generates action items. Key features to highlight:
-- Ask Fellow: Chat with your meeting history to find any detail instantly
-- Redact Feature: Remove sensitive parts from transcripts before sharing
-- Follow-up Emails: Auto-generate personalized follow-up emails from your calls
-- Multi-platform: Works with Zoom, Google Meet, and Microsoft Teams</textarea>
+                    <textarea id="productHighlights" placeholder="e.g., AI-powered meeting notes, automatic follow-up emails, time-saving features"></textarea>
                 </div>
 
                 <div class="field">
                     <label for="productAngles">What angles of the product does the brand want to show?</label>
-                    <textarea id="productAngles">- Time-saving: Show the before/after of manually taking notes vs. using Fellow
-- Professional credibility: Position yourself as someone who has their life together
-- Relatable corporate humor: Play into the "corporate life" aesthetic
-- Problem-solving: Focus on pain points like forgetting what was said in meetings</textarea>
+                    <textarea id="productAngles" placeholder="e.g., Ease of use, professional setting, before/after productivity"></textarea>
                 </div>
 
                 <div class="field">
                     <label for="productLink">Product Access Link</label>
                     <p class="hint">Link where creators can access the product</p>
-                    <input type="url" id="productLink" value="https://box.com/fellow-creator-access">
+                    <input type="url" id="productLink" placeholder="https://...">
                 </div>
 
                 <div class="field">
                     <label for="dos">Do's</label>
                     <p class="hint">One per line</p>
-                    <textarea id="dos">Be authentic and natural on camera
-Show the actual product interface in use
-Use trending sounds when possible
-Include a clear call-to-action (link in bio)
-Film in good lighting with clear audio
-Show your genuine reaction to the features</textarea>
+                    <textarea id="dos" placeholder="Be authentic&#10;Show the product in use&#10;Include a clear CTA"></textarea>
                 </div>
 
                 <div class="field">
                     <label for="donts">Don'ts</label>
                     <p class="hint">One per line</p>
-                    <textarea id="donts">Don't mention competitors (Otter.ai, Fireflies, etc.)
-Don't use copyrighted music
-Don't make claims we can't verify ("saves 10 hours a week")
-Don't film in messy or unprofessional settings
-Don't use the redact feature to imply deception or lying to employers
-Don't post without warming up your account first</textarea>
+                    <textarea id="donts" placeholder="Don't mention competitors&#10;Don't use copyrighted music&#10;Don't make false claims"></textarea>
                 </div>
             </div>
 
@@ -388,34 +371,19 @@ Don't post without warming up your account first</textarea>
                 <div class="field">
                     <label for="searchTerms">Search Terms for Warm-Up</label>
                     <p class="hint">What should creators search to warm up their account? (One per line)</p>
-                    <textarea id="searchTerms">AI notetaker
-AI meeting assistant
-Corporate productivity tips
-Work from home setup
-AI tools for work
-Meeting productivity hacks
-Corporate tech reviews</textarea>
+                    <textarea id="searchTerms" placeholder="AI notetaker&#10;Meeting tools&#10;AI productivity&#10;Corporate AI tools"></textarea>
                 </div>
 
                 <div class="field">
                     <label for="accountNameExamples">Account Name Examples</label>
                     <p class="hint">Example usernames for creators (One per line)</p>
-                    <textarea id="accountNameExamples">@talkingwithbella
-@benjamintalks
-@fellowjasmine
-@ryansfellow
-@techwithtaylor
-@corporatecaitlin</textarea>
+                    <textarea id="accountNameExamples" placeholder="@talkingwithbella&#10;@benjamintalks&#10;@fellowjasmine"></textarea>
                 </div>
 
                 <div class="field">
                     <label for="bioExamples">Bio Examples</label>
                     <p class="hint">Example bios for creators (One per line)</p>
-                    <textarea id="bioExamples">POV: you gave your job to AI but kept the salary
-Idk if I should thank or be scared of AI
-Making corporate life bearable, one hack at a time
-Your favorite coworker who actually knows tech
-Survived 47 meetings this week (with help)</textarea>
+                    <textarea id="bioExamples" placeholder="POV: you gave your job to AI but kept the salary&#10;Idk if I should thank or be scared of AI"></textarea>
                 </div>
             </div>
 
@@ -451,99 +419,9 @@ Survived 47 meetings this week (with help)</textarea>
         let formatCount = 0;
         const maxFormats = 10;
 
-        // Example format data
-        const exampleFormats = [
-            {
-                name: "Product Showcase",
-                links: "https://drive.google.com/file/d/1CgVW7bsLViyB1g4n5GBH5YqPUWYvq6Oz/view",
-                instructions: `Showcase Fellow's features in an engaging walkthrough:
-
-1. Start with a hook that grabs attention
-2. Screen record yourself using Fellow's key features:
-   - Ask Fellow (chat with your meeting history)
-   - Redact Feature (remove sensitive info)
-   - Writing a follow-up email
-3. Show genuine reactions to the features
-4. End with a CTA directing to link in bio
-
-Tip: Film on your phone while screen recording your laptop, or use a split-screen edit.`,
-                text: `3 YEARS of corporate and I'm just now finding out about this?
-This AI just changed how I do meetings forever
-Why did no one tell me about this sooner??
-Feel free to come up with your own hooks based on what's trending!`
-            },
-            {
-                name: "Saying the Wrong Thing in a Meeting",
-                links: "https://drive.google.com/file/d/example123/view",
-                instructions: `This format showcases Fellow's "redact" feature in a funny, relatable way.
-
-How to record:
-1. Join a meeting with Fellow AI enabled
-2. Talk as if you're in a corporate meeting
-3. Say something out of pocket or embarrassing (that you'd want to hide from coworkers)
-4. Show yourself discovering it in the transcript
-5. Demonstrate using the redact feature to remove it
-
-Tip: Film on Snapchat to go back and forth between laptop screen and your face. To get a realistic meeting recap, you can make Fellow listen to an audio recording of an actual meeting on YouTube at x2 speed.
-
-Important: Do NOT use the redact feature to imply lying or deception. Frame it as covering an honest mistake.`,
-                text: `POV: you open the AI meeting recap and realize it heard EVERYTHING
-I said something I shouldn't have...
-When the AI transcript catches your unfiltered thoughts
-Note to self: the AI is always listening`
-            },
-            {
-                name: "Tech Tutorial",
-                links: `https://www.instagram.com/reel/DTlHpwGDE0L/
-https://www.facebook.com/ads/library/?id=866795572484362`,
-                instructions: `Create an educational walkthrough showing a specific Fellow use case.
-
-Format options:
-- B-roll with voiceover
-- Talking head walking through a tutorial
-- Screen recording with face cam in corner
-
-Pick ONE use case per video (try a different one each time):
-- Turn sales calls into tailored follow-up emails
-- Turn 1:1 calls into performance review drafts
-- Create 30 pieces of content from one webinar recording
-- Never forget action items from any meeting
-
-Check the "Fellow Use Cases" tab for more inspiration.`,
-                text: `How I turn my sales calls into tailored follow-up emails using Fellow
-Did you know you could turn your 1:1 calls into a performance review draft instantly?
-How I made 30 pieces of content with one webinar recording in under 5 minutes
-The AI tool that's replacing my entire note-taking system`
-            },
-            {
-                name: "Reaction Video",
-                links: `https://drive.google.com/file/d/13sDcqFPub9U8s1qRXwYGtKaQp3LDHvUH/view
-https://www.instagram.com/p/DQtgkPEjEHj/`,
-                instructions: `React to Fellow's features as if you're discovering them for the first time.
-
-Please include this format in the mix at least once a week.
-
-Structure:
-1. Show a clip or recreate a trending "reaction" format
-2. Transition into showing Fellow
-3. Walk through the feature that impressed you
-4. End with genuine reaction + CTA
-
-Get creative! These are suggested headlines but you have full creative freedom:
-- "This is the tool I used to create instant follow-up emails"
-- "This is how I created 30 ads from one webinar recording"`,
-                text: `Okay but why is no one talking about this??
-I need everyone to stop what they're doing and look at this
-This just changed my entire workflow
-Corporate girlies, gather around`
-            }
-        ];
-
-        // Add initial formats with example data
+        // Add one empty format on load
         document.addEventListener('DOMContentLoaded', () => {
-            exampleFormats.forEach((format, index) => {
-                addFormat(format);
-            });
+            addFormat();
         });
 
         function addFormat(data = null) {
